@@ -4,9 +4,11 @@ import linkedList.LinkedList;
 
 public class HashTable {
     private LinkedList[] table;
-    private int size = 13;
+    private int size = 1289039;
+    private int type; //Define el tipo de función hash que se usará
 
-    public HashTable() {
+    public HashTable(int type) {
+        this.type = type;
         this.table = new LinkedList[this.size];
         for (int i = 0; i < this.size; i++) {
             this.table[i]= new LinkedList();
@@ -41,27 +43,50 @@ public class HashTable {
 
     //Agregar
    public void add(String key, Object data) {
-        int newKey = this.converTo(key);
+       int newKey = this.converTo(key);
 
-        if (newKey >= 0) {
-            int hash = hashCodeM(newKey);
-            this.table[hash].push(data);
+        if (this.type == 1) {
+            if (newKey >= 0) {
+                int hash = hashCodeD(newKey);
+                this.table[hash].push(data);
+            } else {
+                System.out.println("Error al agregar");
+            }
+        } else if (type == 2) {
+            if (newKey >= 0) {
+                int hash = hashCodeM(newKey);
+                this.table[hash].push(data);
+            } else {
+                System.out.println("Error al agregar");
+            }
         } else {
-            System.out.println("Error al agregar");
+            System.out.println("Especifique el tipo, 1 -> division, 2 -> multiplicacion");
         }
+
    }
 
    //Obtener los datos
     public void getAt(String key) {
         int newKey = this.converTo(key);
 
-        if (newKey >= 0) {
-            int hash = hashCodeM(newKey);
-            for (int i = 0; i < this.table[hash].size(); i++){
-                System.out.println(this.table[hash].getAt(i));
+        if (this.type == 1) {
+            if (newKey >= 0) {
+                int hash = hashCodeD(newKey);
+                for (int i = 0; i < this.table[hash].size(); i++){
+                    System.out.println(this.table[hash].getAt(i));
+                }
+            } else {
+                System.out.println("Error al obtener");
             }
-        } else {
-            System.out.println("Error al obtener");
+        } else if (this.type == 2) {
+            if (newKey >= 0) {
+                int hash = hashCodeM(newKey);
+                for (int i = 0; i < this.table[hash].size(); i++){
+                    System.out.println(this.table[hash].getAt(i));
+                }
+            } else {
+                System.out.println("Error al obtener");
+            }
         }
     }
 }
